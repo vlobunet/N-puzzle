@@ -10,20 +10,13 @@
 ;#                                                                              #
 ;# **************************************************************************** #
 
-extern	_ft_memalloc
-
 section	.text
-
-global	_ft_strnew
+	extern	_ft_memalloc
+	global	_ft_strnew
 
 _ft_strnew:
-	push	rbp				; сохраням в стек адрес возврата
-	mov		rbp, rsp		; вершина стека
-	push	rdi				; сохраняем значение rdi
-
+	push rdi
+	inc	rdi
 	call	_ft_memalloc
-
-	pop		rdi				; возвращаем из стека указатель
-	mov		rsp, rbp		; восстанавливаем адрес возврата
-	pop		rbp
+	pop rdi
 	ret

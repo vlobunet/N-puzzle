@@ -2,8 +2,11 @@
 # define PUZZLE_H
 
 #include <unistd.h>
-#include <stdio.h>
+#include <fcntl.h>
 #include "../libft/includes/libft.h"
+
+
+#include <stdio.h>
 
 # define BLACK      "\033[1;30m"
 # define RED        "\033[1;31m"
@@ -18,10 +21,17 @@
 # define ERR_SYS	0
 # define ERR_USAGE	1
 # define ERR_FILE	2
+# define ERR_NUMBER 3
 
 # define STDERR		2
 # define STDOUT		1
 # define STDIN		0
+
+# define ATRIPUTES	"a"
+# define INVALID	1
+# define VALID		0
+
+# define BUFF_SIZE 100
 
 typedef struct				s_attr
 {
@@ -29,6 +39,16 @@ typedef struct				s_attr
 	char					**f;
 }							t_attr;
 
+typedef struct		s_list
+{
+	void			*content;
+	size_t			content_size;
+	struct s_list	*next;
+}					t_list;
+
 int		err(const int err, const char *str);
+int		check_file(int c, char **v);
+t_attr	*check_argv(char **argv, t_attr *atr);
+int		get_next_line(const int fd, char **line);
 
 #endif

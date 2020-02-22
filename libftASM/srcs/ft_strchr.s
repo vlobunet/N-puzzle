@@ -9,31 +9,28 @@
 ;    Updated: 2020/02/22 15:43:08 by bmisyurk         ###   ########.fr        ;
 ;                                                                              ;
 ;******************************************************************************;
-section .text
-	global _ft_strchr
+
+global		_ft_strchr
+
+extern		_ft_strlen
+
+section		.text
 
 _ft_strchr:
-	push	rbp
-	mov		rbp, rsp
+	cmp		rdi, 0
+	je		end
+	cmp 	byte[rdi], 0
+	je 		end
+	cmp		byte [rdi], sil
+	je		solution
+	inc 	rdi
+	jmp 	_ft_strchr
 
-	mov		rdx, rsi
+end:
 	mov		rax, 0
-	jmp		_loop
-_do:
-	inc		rdi
-
-_loop:
-	mov		dh, BYTE [rdi]
-	cmp		dh, dl
-	je		_found
-	test	dh, dh
-	jz		_not_found
-	jmp		_do
-
-_found:
-	mov		rax, rdi
-
-_not_found:
-	mov		rsp, rbp
-	pop		rbp
 	ret
+
+solution:
+	mov 	rax, rdi
+	ret
+	

@@ -21,7 +21,7 @@ void		*ft_memset(void *a, int c, size_t len);
 void		ft_bzero(void *a, size_t len);
 int			ft_toupper(int a);
 int			ft_tolower(int a);
-size_t		ft_strlen(const char *b);
+size_t		ft_strlen(const char *s);
 int			ft_isalpha(int a);
 int			ft_isascii(int a);
 int			ft_isdigit(int a);
@@ -34,6 +34,11 @@ void		ft_putchar_fd(const char c, int fd);
 void		ft_putstr_fd(const char *s, int fd);
 void		ft_putnbr_fd(int nb, int fd);
 void		ft_putendl(char const *s);
-char		*ft_strnew(size_t size);
+char		*ft_strnew(size_t i);
+char		**ft_strsplit(const char *s, char delim);
+void		ft_strdel(char **as);
+void		ft_memdel(void **ap);
+char		*ft_strjoin(const char *s1, const char *s2);
+char		*ft_strsub(char *str, unsigned int start, size_t len);
 
 #endif
