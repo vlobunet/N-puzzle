@@ -1,5 +1,7 @@
-NAME		= N-puzzle
-SRCS		= src/main.c
+NAME		=	N-puzzle
+SRCS		=	src/main.c \
+				src/error.c \
+				src/file_check.c
 
 OBJS		= $(SRCS:.c=.o)
 FLAGS		= -g3 -Wall -Wextra -Werror
@@ -25,8 +27,8 @@ RES			= \033[m
 all: $(NAME)
 
 $(NAME): $(LIB) $(OBJS)
-	@gcc -o $(NAME) $(FLAGS) $(OBJS) $(LIB) -ltermcap
-		@echo  "\b$(YELLOW) : OK$(RES)"
+	@gcc -o $(NAME) $(FLAGS) $(OBJS) $(LIB)
+	@echo  "\b$(YELLOW) : OK$(RES)"
 
 %.o: %.c $(HEADER)
 	@gcc -c $(FLAGS) $(INCL) -o $@ -c $<

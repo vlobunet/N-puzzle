@@ -1,8 +1,8 @@
 #include "../includes/puzzle.h"
 
-int main(int argc, char const *argv[])
+int main(int c, char **v)
 {
-	if (argv || argc)
-		;
+	if (check_file(c, v))
+		return (1);
 	return (0);
 }

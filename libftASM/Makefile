@@ -5,7 +5,9 @@ SRC = ft_bzero.s ft_isalpha.s ft_isdigit.s ft_isascii.s ft_isprint.s \
 	ft_memset.s ft_memcpy.s ft_strdup.s ft_cat.s \
 	ft_putchar.s ft_putstr.s \
 	ft_memalloc.s ft_strchr.s ft_strncmp.s ft_strncpy.s \
-	ft_atoll.s ft_atoi.s
+	ft_atoll.s ft_atoi.s \
+	ft_putchar_fd.s ft_putstr_fd.s ft_putnbr_fd.s ft_putendl.s \
+	ft_strnew.s ft_memalloc.s
 
 OBJDIR = objs
 
