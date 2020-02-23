@@ -3,15 +3,14 @@ section	.text
 	extern		_free
 
 _ft_memdel:
-	push		rbp						; stack frame init
-	mov			rbp, rsp				;
+	push	rbp
+	mov		rbp, rsp
 	
-	mov rsi, rdi						; store the pointer into rsi
-	mov qword [rdi], 0					; set the pointer to NULL
+	mov		rsi, rdi
+	mov		qword [rdi], 0
+	mov		rdi, [rsi]
+	call	_free
 
-	mov rdi, [rsi]						; load the pointer to rdi
-	call _free							; free the pointer
-
-	exit_process:						; exit marker
-		leave							; leave stack frame
-		ret								; return
+_ret:
+	leave
+	ret

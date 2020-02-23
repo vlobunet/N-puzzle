@@ -10,23 +10,22 @@
 ;                                                                              ;
 ;******************************************************************************;
 
-global		_ft_strchr
+global	_ft_strchr
+extern	_ft_strlen
 
-extern		_ft_strlen
-
-section		.text
+section	.text
 
 _ft_strchr:
 	cmp		rdi, 0
-	je		end
+	je		_ret
 	cmp 	byte[rdi], 0
-	je 		end
+	je		_ret
 	cmp		byte [rdi], sil
 	je		solution
-	inc 	rdi
-	jmp 	_ft_strchr
+	inc		rdi
+	jmp		_ft_strchr
 
-end:
+_ret:
 	mov		rax, 0
 	ret
 

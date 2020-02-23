@@ -10,8 +10,9 @@
 ;                                                                              ;
 ;******************************************************************************;
 section .text
-	global _ft_putstr
-	extern _ft_strlen
+
+global _ft_putstr
+extern _ft_strlen
 
 _ft_putstr:
 	push	rbp

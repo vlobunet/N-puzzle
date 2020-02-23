@@ -3,7 +3,7 @@
 
 #include <unistd.h>
 #include <fcntl.h>
-#include "../libft/includes/libft.h"
+#include "../libftASM/includes/libfts.h"
 
 
 #include <stdio.h>
@@ -31,24 +31,25 @@
 # define INVALID	1
 # define VALID		0
 
-# define BUFF_SIZE 100
+# define BUFF_SIZE 1024
 
-typedef struct				s_attr
+typedef struct		s_attr
 {
-	uint8_t					p;
-	char					**f;
-}							t_attr;
+	uint8_t			p;
+	char			**f;
+}					t_attr;
 
-typedef struct		s_list
+typedef struct		s_mapp
 {
-	void			*content;
-	size_t			content_size;
-	struct s_list	*next;
-}					t_list;
+	uint8_t			size;
+	int				**array;
+	uint8_t			t[100];
+}					t_mapp;
 
 int		err(const int err, const char *str);
 int		check_file(int c, char **v);
 t_attr	*check_argv(char **argv, t_attr *atr);
 int		get_next_line(const int fd, char **line);
+int		control_attr(char *str, char *valid_letter, int i, int j);
 
 #endif

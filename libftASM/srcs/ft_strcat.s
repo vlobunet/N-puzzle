@@ -10,9 +10,10 @@
 ;                                                                              ;
 ;******************************************************************************;
 section .text
-	global _ft_strcat
-	extern _ft_strlen
-	extern _ft_memcpy
+
+global _ft_strcat
+extern _ft_strlen
+extern _ft_memcpy
 
 _ft_strcat:
 	push	rbp
