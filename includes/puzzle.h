@@ -51,5 +51,7 @@ int		check_file(int c, char **v);
 t_attr	*check_argv(char **argv, t_attr *atr);
 int		get_next_line(const int fd, char **line);
 int		control_attr(char *str, char *valid_letter, int i, int j);
+int		file_check(char *fname, int fd, char *line, t_mapp *map);
+int		ft_solvable(int **matrix, uint8_t size);
 
 #endif

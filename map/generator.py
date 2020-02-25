@@ -90,7 +90,6 @@ if __name__ == "__main__":
 	puzzle = make_puzzle(s, solvable=solv, iterations=args.iterations)
 
 	w = len(str(s*s))
-	print "# This puzzle is %s" % ("solvable" if solv else "unsolvable")
 	print "%d" % s
 	for y in range(s):
 		for x in range(s):

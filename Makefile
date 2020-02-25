@@ -3,10 +3,12 @@ SRCS		=	src/main.c \
 				src/error.c \
 				src/file_check.c \
 				src/check_attr.c \
-				src/get_next_line.c
+				src/get_next_line.c \
+				src/validation.c \
+				src/ft_solvable.c
 
 OBJS		= $(SRCS:.c=.o)
-FLAGS		= -g3 -Wall -Wextra -Werror -fsanitize=address,undefined
+FLAGS		= -g3 -Wall -Wextra -Werror -fsanitize=address,undefined -g
 INCL 		= -I./includes -I./libftASM/includes
 HEADER		= includes/puzzle.h
 LIB			= libftASM/libfts.a
