@@ -5,7 +5,8 @@ SRCS		=	src/main.c \
 				src/check_attr.c \
 				src/get_next_line.c \
 				src/validation.c \
-				src/ft_solvable.c
+				src/ft_solvable.c \
+				src/input_map.c
 
 OBJS		= $(SRCS:.c=.o)
 FLAGS		= -g3 -Wall -Wextra -Werror -fsanitize=address,undefined -g

@@ -33,6 +33,21 @@
 
 # define BUFF_SIZE 1024
 
+typedef struct		s_gnl
+{
+	int				fd;
+	int				state;
+	char			*rest;
+	struct s_gnl	*next;
+}					t_gnl;
+
+typedef struct			s_list
+{
+	void			*content;
+	size_t			content_size;
+	struct s_list	*next;
+}						t_list;
+
 typedef struct		s_attr
 {
 	uint8_t			p;
@@ -49,9 +64,13 @@ typedef struct		s_mapp
 int		err(const int err, const char *str);
 int		check_file(int c, char **v);
 t_attr	*check_argv(char **argv, t_attr *atr);
-int		get_next_line(const int fd, char **line);
+int		get_next_line(int const fd, char **line);
 int		control_attr(char *str, char *valid_letter, int i, int j);
 int		file_check(char *fname, int fd, char *line, t_mapp *map);
 int		ft_solvable(int **matrix, uint8_t size);
+t_mapp	*input_map(t_mapp *map);
+t_mapp *get_struct(void);
+int		control_attr(char *str, char *valid_letter, int i, int j);
+int control_line(char *line, t_mapp **map, char **s, uint8_t c);
 
 #endif

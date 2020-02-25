@@ -40,5 +40,9 @@ void		ft_strdel(char **as);
 void		ft_memdel(void **ap);
 char		*ft_strjoin(const char *s1, const char *s2);
 char		*ft_strsub(char *str, unsigned int start, size_t len);
+char		*ft_strncpy(char *dest, const char *src, size_t len);
+char		*ft_strcpy(char *dst, const char *src);
+
+void	*ft_memmove(void *dest, const void *src, size_t n);
 
 #endif
