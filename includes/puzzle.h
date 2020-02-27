@@ -3,6 +3,7 @@
 
 #include <unistd.h>
 #include <fcntl.h>
+#include <math.h>
 #include "../libftASM/includes/libfts.h"
 
 
@@ -103,5 +104,13 @@ int control_line(char *line, t_mapp **map, char **s, uint8_t c);
 uint8_t		*get_line(int **matrix, int size, uint16_t power);
 
 void AStar(int **m, uint8_t size);
+int		*goal(int size, int dir, int i, int squr, int *ret);
+int		in_closed(int *line, t_set *set);
+
+int	heuristic_manhatan(int *current, int *goal, int n);
+int	heuristic_hamming(int *current, int *goal, int n);
+int	linear_conflict_manhattan(int *current, int *goal, int n);
+int	heuristic_euclidian(int *current, int *goal, int n);
+int	*cpy_line(int *puzzle, int size);
 
 #endif

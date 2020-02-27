@@ -44,5 +44,6 @@ char		*ft_strncpy(char *dest, const char *src, size_t len);
 char		*ft_strcpy(char *dst, const char *src);
 
 void	*ft_memmove(void *dest, const void *src, size_t n);
+int		ft_memcmp(const void *p1, const void *p2, size_t n);
 
 #endif

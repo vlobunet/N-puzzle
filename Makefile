@@ -7,7 +7,10 @@ SRCS		=	src/main.c \
 				src/validation.c \
 				src/ft_solvable.c \
 				src/input_map.c \
-				src/AStar.c
+				src/AStar.c \
+				src/goal.c \
+				src/hash.c \
+				src/heuristic_func.c
 
 OBJS		= $(SRCS:.c=.o)
 FLAGS		= -g3 -Wall -Wextra -Werror -fsanitize=address,undefined -g
