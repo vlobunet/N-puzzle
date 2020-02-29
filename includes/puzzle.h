@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <math.h>
+# include <mlx.h>
 #include "../libftASM/includes/libfts.h"
 
 
@@ -33,6 +34,10 @@
 # define VALID		0
 
 # define BUFF_SIZE 1024
+# define W			500
+# define H			500
+
+# define ESC		53
 
 typedef struct		s_gnl
 {
@@ -51,7 +56,12 @@ typedef struct			s_list
 
 typedef struct		s_attr
 {
-	uint8_t			p;
+	uint8_t			h;
+	uint8_t			m;
+	uint8_t			l;
+	uint8_t			u;
+	uint8_t			g;
+	uint8_t			e;
 	char			**f;
 }					t_attr;
 
@@ -86,16 +96,78 @@ typedef struct		s_set
 	char			*hashmap2;
 }					t_set;
 
-// typedef struct s_visual
-// {
-// 	t_mlx			*mlx;
-// } t_visual;
+typedef struct		s_visual
+{
+	void			*mlx;
+	void			*win;
+	void			*img;
+	char			*data;
+}					t_visual;
+//////////////////////////////////////////////////////////////////////////////
+
+typedef struct	s_img
+{
+	int		index;
+	int		win_pos[2];
+	int		dim[2];
+	int		sizeline;
+	int		size;
+	int		endian;
+	int		opp;
+	int		start;
+	int		org[2];
+	int		piece_size;
+	void	*ptr;
+	int		*data;
+}				t_img;
+
+typedef struct	s_mlx
+{
+
+	int		dim[2];
+	int		color;
+	void	*ptr;
+	void	*win;
+}				t_mlx;
+
+typedef struct	s_param
+{
+	int				press;
+	int				ready;
+	int				m_color;
+	int				i_color;
+	int				b_mode;
+	int				run;
+	int				end;
+	int				colors[3];
+	int				speed;
+	int				display_num;
+	int				current_step;
+	int				complex_time;
+	int				complex_size;
+	char			*moves;
+	char			*heuri;
+	char			*search;
+	t_mlx			*mlx;
+	t_img			*img;
+	// t_puzzle		*puzzle;
+	// t_state			*state;
+}				t_param;
+
+typedef struct	s_tdata
+{
+	t_param	*p;
+	t_img	*img;
+}				t_tdata;
+
+//////////////////////////////////////////////////////////////////////////////
+
 int		err(const int err, const char *str);
 int		check_file(int c, char **v);
 t_attr	*check_argv(char **argv, t_attr *atr);
 int		get_next_line(int const fd, char **line);
 int		control_attr(char *str, char *valid_letter, int i, int j);
-int		file_check(char *fname, int fd, char *line, t_mapp *map);
+int		file_check(char *fname, int fd, char *line, t_mapp *map, t_attr *atr);
 int		ft_solvable(int **matrix, uint8_t size);
 t_mapp	*input_map(t_mapp *map);
 t_mapp *get_struct(void);
@@ -103,7 +175,7 @@ int		control_attr(char *str, char *valid_letter, int i, int j);
 int control_line(char *line, t_mapp **map, char **s, uint8_t c);
 uint8_t		*get_line(int **matrix, int size, uint16_t power);
 
-void AStar(int **m, uint8_t size);
+void AStar(int **m, uint8_t size, t_attr *attr);
 int		*goal(int size, int dir, int i, int squr, int *ret);
 int		in_closed(int *line, t_set *set);
 
@@ -115,5 +187,7 @@ int	*cpy_line(int *puzzle, int size);
 
 unsigned int	get_hash_2(int *line, int size);
 unsigned int	get_hash_1(int *line, int size);
+t_attr	*init_array_attributes(void);
+void display_puzzle(void);
 
 #endif

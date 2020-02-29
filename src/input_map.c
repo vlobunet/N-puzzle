@@ -26,7 +26,6 @@ t_mapp *input_map(t_mapp *map)
 		ft_strdel(&line);
 		i++;
 	}
-	printf("HERE\n");
 	if (!ft_solvable(map->array, map->size))
 		return (NULL);
 	return (map);

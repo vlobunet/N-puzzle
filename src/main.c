@@ -4,29 +4,27 @@ int main(int c, char **v)
 {
 	t_attr	*attr = NULL;;
 	t_mapp	*map = NULL;
-	char	**f_names;
+	char	**f_names = NULL;
 
-	if (c < 2)
+	if (c >= 2)
+		attr = check_argv(v + 1, NULL);
+	else
+		attr = init_array_attributes();
+	if (attr && attr->f)
 	{
-		if (!(map = input_map(NULL)))
-			return(err(ERR_SYS, "erroneous input or puzzle is insoluble."));
-	}
-	else if (!(attr = check_argv(v + 1, NULL)))
-		return (1);
-
-	if (attr)
-	{
-		if  (!attr->f)
-			return (err(ERR_FILE, "You must also specify the path to the map."));
 		f_names = attr->f;
 		while (f_names && *f_names)
 		{
-			if (file_check(*f_names, 0, NULL, NULL) == INVALID)
+			if (file_check(*f_names, 0, NULL, NULL, attr) == INVALID)
 				err(ERR_FILE, *f_names);
 			f_names++;
 		}
 	}
-	else if (map)
-		AStar(map->array, map->size);	
+	else
+		map = input_map(NULL);
+	if (attr && map && ft_solvable(map->array, map->size))
+		AStar(map->array, map->size, attr);
+	else
+		return (err(ERR_SYS, "Error input or map not Solvable"));
 	return (0);
 }

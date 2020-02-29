@@ -22,7 +22,12 @@ t_attr	*init_array_attributes(void)
 
 	if (!(attr = (t_attr *)malloc(sizeof(t_attr))))
 		return (NULL);
-	attr->p = 0;
+	attr->h = 0;
+	attr->l = 0;
+	attr->e = 0;
+	attr->m = 0;
+	attr->g = 0;
+	attr->u = 0;
 	attr->f = NULL;
 	return (attr);
 }
@@ -83,7 +88,12 @@ t_attr	*check_argv(char **argv, t_attr *atr)
 	atr = init_array_attributes();
 	while (argv && *argv && *argv[0] == '-')
 	{
-		search_letter(*argv, 'p') ? atr->p = 1 : 0;
+		search_letter(*argv, 'h') ? atr->h = 1 : 0;
+		search_letter(*argv, 'm') ? atr->m = 1 : 0;
+		search_letter(*argv, 'l') ? atr->l = 1 : 0;
+		search_letter(*argv, 'e') ? atr->e = 1 : 0;
+		search_letter(*argv, 'u') ? atr->u = 1 : 0;
+		search_letter(*argv, 'g') ? atr->g = 1 : 0;
 		argv = argv + 1;
 	}
 	atr->f = (argv && *argv ? argv : NULL);

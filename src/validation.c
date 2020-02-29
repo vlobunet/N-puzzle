@@ -54,7 +54,7 @@ int control_line(char *line, t_mapp **map, char **s, uint8_t c)
 	return (0);
 }
 
-int file_check(char *fname, int fd, char *line, t_mapp *map)
+int file_check(char *fname, int fd, char *line, t_mapp *map, t_attr *attr)
 {
 	uint8_t row = -2;
 
@@ -77,6 +77,6 @@ int file_check(char *fname, int fd, char *line, t_mapp *map)
 	}
 	if (!ft_solvable(map->array, map->size))
 		return (err(ERR_FILE, "Not Solvable"));
-	AStar(map->array, map->size);
+	AStar(map->array, map->size, attr);
 	return(0);
 }

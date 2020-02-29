@@ -73,8 +73,8 @@ t_node	*node_create(t_node *cur, int *line, t_set *set)
 	t_node *n;
 
 	n = ft_memalloc(sizeof(t_node));
-	n->g_score = set->algo == 1 ? 0 : cur->g_score + 1;
-	n->h_score = set->algo == 2 ? 0 : (*g_heuristic[set->heuristic])(line, set->goal, set->size);
+	set->algo == 1 ? n->g_score = cur->g_score + 1 : 0;
+	set->algo == 2 ? n->h_score = (*g_heuristic[set->heuristic])(line, set->goal, set->size) : 0;
 	n->from = cur;
 	n->puzzle = cpy_line(line, set->size);
 	n->next = NULL;
@@ -144,7 +144,7 @@ void	swap(int n, t_node *cur, t_set *set)
 	int		i = 0;
 
 	line[set->size * set->size] = 0;
-	while (/*cur->puzzle[i]*/ i < set->size * set->size)
+	while (i < set->size * set->size)
 	{
 		if (cur->puzzle[i] == n)
 			line[i] = -1;
@@ -159,14 +159,10 @@ void	swap(int n, t_node *cur, t_set *set)
 
 void	fill_open(t_set *set, t_node *cur)
 {
-	int zero;
-	//int coord[2];
-	int row;
-	int col;
+	int zero = get_zero(cur->puzzle);
+	int row = zero % set->size;
+	int col = zero / set->size;
 
-	zero = get_zero(cur->puzzle);
-	row = zero % set->size;
-	col = zero / set->size;
 	(row + 1 < set->size) ? swap(cur->puzzle[row + 1 + col * set->size], cur, set) : 0;
 	(row - 1 >= 0) ? swap(cur->puzzle[row - 1 + col * set->size], cur, set) : 0;
 	(col + 1 < set->size) ? swap(cur->puzzle[row + (col + 1) * set->size], cur, set) : 0;
@@ -204,15 +200,37 @@ void	print_puzzle(int *puzzle, int size)
 	}
 }
 
-void AStar(int **m, uint8_t size)
+int get_heuristic(t_attr *attr)
+{
+	if (attr->m)
+		return (0);
+	if (attr->e)
+		return (3);
+	if (attr->l)
+		return (2);
+	if (attr->h)
+		return (1);
+	return (0);
+}
+
+int get_algo(t_attr *attr)
+{
+	if (attr->g)
+		return(1);
+	if (attr->u)
+		return (2);
+	return (2);
+}
+
+void AStar(int **m, uint8_t size, t_attr *attr)
 {
 	t_set set;
 	t_node *cur;
 
 	int *line = remake_in_line(m, size);
 	init_sett(&set, line, size, &cur);
-	set.heuristic = 3; //тут пихаем флаг евристики
-	set.algo = 1; //тут пихаем флаг алгоритма
+	set.heuristic = get_heuristic(attr);
+	set.algo = get_algo(attr);
 	while (!set.path)
 	{
 		fill_open(&set, cur);
@@ -226,4 +244,5 @@ void AStar(int **m, uint8_t size)
 	}
 	printf("complexity: %i, size complexity: + %i = %i\n", set.closed_size, set.open_size, set.open_size + set.closed_size);
 	print_puzzle(set.path->puzzle, set.size);
+	display_puzzle();
 }
