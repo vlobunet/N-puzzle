@@ -73,8 +73,8 @@ t_node	*node_create(t_node *cur, int *line, t_set *set)
 	t_node *n;
 
 	n = ft_memalloc(sizeof(t_node));
-	set->algo == 1 ? n->g_score = cur->g_score + 1 : 0;
-	set->algo == 2 ? n->h_score = (*g_heuristic[set->heuristic])(line, set->goal, set->size) : 0;
+	n->g_score = set->algo == 1 ? 0  : cur->g_score + 1;
+	n->h_score = set->algo == 2 ? 0 : (*g_heuristic[set->heuristic])(line, set->goal, set->size);
 	n->from = cur;
 	n->puzzle = cpy_line(line, set->size);
 	n->next = NULL;
@@ -219,7 +219,42 @@ int get_algo(t_attr *attr)
 		return(1);
 	if (attr->u)
 		return (2);
-	return (2);
+	return (0);
+}
+
+void rev_path(t_set *set)
+{
+	t_node *prev = NULL;
+	t_node *cur = set->path;
+	t_node *next = NULL;
+
+	while (cur)
+	{
+		next = cur->from;
+		cur->from = prev;
+		prev = cur;
+		cur = next;
+	}
+	set->path = prev;
+}
+
+void display_puzzle(t_set *set)
+{
+	int i = 1;
+
+	if (set->path)
+	{
+		printf("complexity: %i, size complexity: + %i = %i\n", set->closed_size, set->open_size, set->open_size + set->closed_size);
+		rev_path(set);
+		while (set->path)
+		{
+			print_puzzle(set->path->puzzle, set->size);
+			printf("\n");
+			set->path = set->path->from;
+			i++;
+		}
+		printf("size: %d\n", i);
+	}
 }
 
 void AStar(int **m, uint8_t size, t_attr *attr)
@@ -231,6 +266,7 @@ void AStar(int **m, uint8_t size, t_attr *attr)
 	init_sett(&set, line, size, &cur);
 	set.heuristic = get_heuristic(attr);
 	set.algo = get_algo(attr);
+	printf("RUN...\n");
 	while (!set.path)
 	{
 		fill_open(&set, cur);
@@ -242,7 +278,6 @@ void AStar(int **m, uint8_t size, t_attr *attr)
 		set.closed_size += 1;
 		set.open_size -= 1;
 	}
-	printf("complexity: %i, size complexity: + %i = %i\n", set.closed_size, set.open_size, set.open_size + set.closed_size);
-	print_puzzle(set.path->puzzle, set.size);
-	display_puzzle();
+	display_puzzle(&set);
+	exit(0);
 }

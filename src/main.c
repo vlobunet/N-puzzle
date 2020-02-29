@@ -7,7 +7,10 @@ int main(int c, char **v)
 	char	**f_names = NULL;
 
 	if (c >= 2)
-		attr = check_argv(v + 1, NULL);
+	{
+		if (!(attr = check_argv(v + 1, NULL)))
+			return (1);
+	}
 	else
 		attr = init_array_attributes();
 	if (attr && attr->f)

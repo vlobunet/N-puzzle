@@ -34,10 +34,6 @@
 # define VALID		0
 
 # define BUFF_SIZE 1024
-# define W			500
-# define H			500
-
-# define ESC		53
 
 typedef struct		s_gnl
 {
@@ -96,71 +92,6 @@ typedef struct		s_set
 	char			*hashmap2;
 }					t_set;
 
-typedef struct		s_visual
-{
-	void			*mlx;
-	void			*win;
-	void			*img;
-	char			*data;
-}					t_visual;
-//////////////////////////////////////////////////////////////////////////////
-
-typedef struct	s_img
-{
-	int		index;
-	int		win_pos[2];
-	int		dim[2];
-	int		sizeline;
-	int		size;
-	int		endian;
-	int		opp;
-	int		start;
-	int		org[2];
-	int		piece_size;
-	void	*ptr;
-	int		*data;
-}				t_img;
-
-typedef struct	s_mlx
-{
-
-	int		dim[2];
-	int		color;
-	void	*ptr;
-	void	*win;
-}				t_mlx;
-
-typedef struct	s_param
-{
-	int				press;
-	int				ready;
-	int				m_color;
-	int				i_color;
-	int				b_mode;
-	int				run;
-	int				end;
-	int				colors[3];
-	int				speed;
-	int				display_num;
-	int				current_step;
-	int				complex_time;
-	int				complex_size;
-	char			*moves;
-	char			*heuri;
-	char			*search;
-	t_mlx			*mlx;
-	t_img			*img;
-	// t_puzzle		*puzzle;
-	// t_state			*state;
-}				t_param;
-
-typedef struct	s_tdata
-{
-	t_param	*p;
-	t_img	*img;
-}				t_tdata;
-
-//////////////////////////////////////////////////////////////////////////////
 
 int		err(const int err, const char *str);
 int		check_file(int c, char **v);
@@ -188,6 +119,5 @@ int	*cpy_line(int *puzzle, int size);
 unsigned int	get_hash_2(int *line, int size);
 unsigned int	get_hash_1(int *line, int size);
 t_attr	*init_array_attributes(void);
-void display_puzzle(void);
 
 #endif

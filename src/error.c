@@ -2,7 +2,12 @@
 
 void	print_other(void)
 {
-	ft_putstr_fd("\t-a -- ******************************.\n", STDERR);
+	ft_putstr_fd("\t-g -- greedy search\n", STDERR);
+	ft_putstr_fd("\t-u -- uniform search\n", STDERR);
+	ft_putstr_fd("\t-h -- hamming heuristic\n", STDERR);
+	ft_putstr_fd("\t-m -- manhattan heuristic\n", STDERR);
+	ft_putstr_fd("\t-l -- linear conflict heuristic\n", STDERR);
+	ft_putstr_fd("\t-e -- euclidian heuristic\n", STDERR);
 }
 
 
