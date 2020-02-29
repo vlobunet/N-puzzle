@@ -13,10 +13,11 @@ int main(int c, char **v)
 	}
 	else if (!(attr = check_argv(v + 1, NULL)))
 		return (1);
-	if (attr && !attr->f)
-		return (err(ERR_FILE, "You must also specify the path to the map."));
-	else
+
+	if (attr)
 	{
+		if  (!attr->f)
+			return (err(ERR_FILE, "You must also specify the path to the map."));
 		f_names = attr->f;
 		while (f_names && *f_names)
 		{
@@ -25,5 +26,7 @@ int main(int c, char **v)
 			f_names++;
 		}
 	}
+	else if (map)
+		AStar(map->array, map->size);	
 	return (0);
 }

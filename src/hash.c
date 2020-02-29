@@ -47,14 +47,14 @@ unsigned int g_crc32_table[] =
 	0xbcb4666d, 0xb8757bda, 0xb5365d03, 0xb1f740b4
 };
 
-unsigned int	get_hash_1(int *line)
+unsigned int	get_hash_1(int *line, int size)
 {
 	unsigned int	key;
 	int				i;
 
 	i = 0;
 	key = 2166136261;
-	while (line[i])
+	while (i < size * size)
 	{
 		key ^= line[i];
 		key *= 16777619;
@@ -63,14 +63,14 @@ unsigned int	get_hash_1(int *line)
 	return (key % ((2000000) * 8));
 }
 
-unsigned int	get_hash_2(int *line)
+unsigned int	get_hash_2(int *line, int size)
 {
 	unsigned int	key;
 	int				i;
 
 	key = 0xffffffff;
 	i = 0;
-	while (line[i])
+	while (i < size * size)
 	{
 		key = (key << 8) ^ g_crc32_table[((key >> 24) ^ line[i]) & 255];
 		i++;
@@ -83,8 +83,8 @@ int		in_closed(int *line, t_set *set)
 	int key1;
 	int key2;
 
-	key1 = get_hash_1(line);
-	key2 = get_hash_2(line);
+	key1 = get_hash_1(line, set->size);
+	key2 = get_hash_2(line, set->size);
 	if ((set->hashmap1[key1 / 8] >> key1 % 8) & 1 &&
 		((set->hashmap2[key2 / 8] >> key2 % 8) & 1))
 		return (1);

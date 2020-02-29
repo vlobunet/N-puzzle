@@ -77,7 +77,6 @@ int file_check(char *fname, int fd, char *line, t_mapp *map)
 	}
 	if (!ft_solvable(map->array, map->size))
 		return (err(ERR_FILE, "Not Solvable"));
-	//visualisation(map);
 	AStar(map->array, map->size);
 	return(0);
 }

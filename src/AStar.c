@@ -65,7 +65,8 @@ int	(*g_heuristic[4])(int *curr, int *goal, int n) = {
 	heuristic_manhatan,
 	heuristic_hamming,
 	linear_conflict_manhattan,
-	heuristic_euclidian};
+	heuristic_euclidian
+};
 
 t_node	*node_create(t_node *cur, int *line, t_set *set)
 {
@@ -73,8 +74,7 @@ t_node	*node_create(t_node *cur, int *line, t_set *set)
 
 	n = ft_memalloc(sizeof(t_node));
 	n->g_score = set->algo == 1 ? 0 : cur->g_score + 1;
-	n->h_score = set->algo == 2 ? 0 :
-	(*g_heuristic[set->heuristic])(line, set->goal, set->size);
+	n->h_score = set->algo == 2 ? 0 : (*g_heuristic[set->heuristic])(line, set->goal, set->size);
 	n->from = cur;
 	n->puzzle = cpy_line(line, set->size);
 	n->next = NULL;
@@ -123,21 +123,10 @@ void	push(t_node *n, t_set *set)
 			last->next = n;
 	}
 }
-
-void	swap(int n, t_node *cur, t_set *set)
+void	add_to_list(int *line, t_node *cur, t_set *set)
 {
-	int		line[set->size * set->size + 1];
-	int		i = 0;
-	t_node	*nw;
+	t_node *nw;
 
-	line[set->size * set->size] = 0;
-	while (cur->puzzle[i])
-	{
-		if (cur->puzzle[i] == n) line[i] = -1;
-		else if (cur->puzzle[i] == -1) line[i] = n;
-		else line[i] = cur->puzzle[i];
-		i++;
-	}
 	if (!is_solution(line, cur, set) && !set->path)
 	{
 		if (!in_closed(line, set))
@@ -146,6 +135,26 @@ void	swap(int n, t_node *cur, t_set *set)
 			push(nw, set);
 		}
 	}
+}
+
+
+void	swap(int n, t_node *cur, t_set *set)
+{
+	int		line[set->size * set->size + 1];
+	int		i = 0;
+
+	line[set->size * set->size] = 0;
+	while (/*cur->puzzle[i]*/ i < set->size * set->size)
+	{
+		if (cur->puzzle[i] == n)
+			line[i] = -1;
+		else if (cur->puzzle[i] == -1)
+			line[i] = n;
+		else
+			line[i] = cur->puzzle[i];
+		i++;
+	}
+	add_to_list(line, cur, set);
 }
 
 void	fill_open(t_set *set, t_node *cur)
@@ -164,26 +173,57 @@ void	fill_open(t_set *set, t_node *cur)
 	(col - 1 >= 0) ? swap(cur->puzzle[row + (col - 1) * set->size], cur, set) : 0;
 }
 
+void			push_hash(int *puzzle, t_set *set)
+{
+	int key1;
+	int key2;
+
+	key1 = get_hash_1(puzzle, set->size);
+	key2 = get_hash_2(puzzle, set->size);
+	set->hashmap1[key1 / 8] |= 1 << key1 % 8;
+	set->hashmap2[key2 / 8] |= 1 << key2 % 8;
+}
+
+void	print_puzzle(int *puzzle, int size)
+{
+	int x;
+	int y;
+
+	y = 0;
+	while (y < size)
+	{
+		x = 0;
+		while (x < size)
+		{
+			printf("%- 4i", puzzle[x + y * size] == -1
+			? 0 : puzzle[x + y * size]);
+			x++;
+		}
+		printf("\n");
+		y++;
+	}
+}
 
 void AStar(int **m, uint8_t size)
 {
 	t_set set;
 	t_node *cur;
 
-
 	int *line = remake_in_line(m, size);
 	init_sett(&set, line, size, &cur);
-	// set.heuristic = heuristic; тут пихаем флаг евристики
-	// set.algo = algo; тут пихаем флаг алгоритма
-	// while (!set.path)
-	// {
+	set.heuristic = 3; //тут пихаем флаг евристики
+	set.algo = 1; //тут пихаем флаг алгоритма
+	while (!set.path)
+	{
 		fill_open(&set, cur);
-		// add_to_map(current->puzzle, &set);
-		// current->next = set.closed;
-		// set.closed = current;
-		// current = set.open;
-		// set.open = current->next;
-		// set.closed_size += 1;
-		// set.open_size -= 1;
-	// }
+		push_hash(cur->puzzle, &set);
+		cur->next = set.closed;
+		set.closed = cur;
+		cur = set.open;
+		set.open = cur->next;
+		set.closed_size += 1;
+		set.open_size -= 1;
+	}
+	printf("complexity: %i, size complexity: + %i = %i\n", set.closed_size, set.open_size, set.open_size + set.closed_size);
+	print_puzzle(set.path->puzzle, set.size);
 }

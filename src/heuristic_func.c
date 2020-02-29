@@ -87,7 +87,6 @@ int			linear_conflict_manhattan(int *cur, int *goal, int n)
 	int h = heuristic_manhatan(cur, goal, n);
 	int *cpy = cpy_line(cur, n);
 
-	//cpy = cpy_line(current, n);
 	while (cpy[++i])
 		if (cpy[i] != -1)
 		{

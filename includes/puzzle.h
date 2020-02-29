@@ -113,4 +113,7 @@ int	linear_conflict_manhattan(int *current, int *goal, int n);
 int	heuristic_euclidian(int *current, int *goal, int n);
 int	*cpy_line(int *puzzle, int size);
 
+unsigned int	get_hash_2(int *line, int size);
+unsigned int	get_hash_1(int *line, int size);
+
 #endif
