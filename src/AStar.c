@@ -61,7 +61,7 @@ int		*cpy_line(int *line, int size)
 	return (new);
 }
 
-int	(*g_heuristic[4])(int *curr, int *goal, int n) = {
+int	(*g_func[4])(int *curr, int *goal, int n) = {
 	heuristic_manhatan,
 	heuristic_hamming,
 	linear_conflict_manhattan,
@@ -74,7 +74,7 @@ t_node	*node_create(t_node *cur, int *line, t_set *set)
 
 	n = ft_memalloc(sizeof(t_node));
 	n->g_score = set->algo == 1 ? 0  : cur->g_score + 1;
-	n->h_score = set->algo == 2 ? 0 : (*g_heuristic[set->heuristic])(line, set->goal, set->size);
+	n->h_score = set->algo == 2 ? 0 : (*g_func[set->heuristic])(line, set->goal, set->size);
 	n->from = cur;
 	n->puzzle = cpy_line(line, set->size);
 	n->next = NULL;
@@ -244,7 +244,8 @@ void display_puzzle(t_set *set)
 
 	if (set->path)
 	{
-		printf("complexity: %i, size complexity: + %i = %i\n", set->closed_size, set->open_size, set->open_size + set->closed_size);
+		printf("complexity: %i, size complexity: + %i = %i\n",
+			set->closed_size, set->open_size, set->open_size + set->closed_size);
 		rev_path(set);
 		while (set->path)
 		{

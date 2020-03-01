@@ -14,8 +14,6 @@ SRCS		=	src/main.c \
 
 OBJS		= $(SRCS:.c=.o)
 FLAGS		= -g3 -Wall -Wextra -Werror -fsanitize=address,undefined -g
-FRMW		= -lmlx -framework OpenGL -framework Appkit
-MLX 		= -L /usr/local/lib/ -lmlx -framework OpenGl -framework AppKit -lm -lpthread
 INCL 		= -I./includes -I./libftASM/includes
 HEADER		= includes/puzzle.h
 LIB			= libftASM/libfts.a
@@ -38,7 +36,7 @@ RES			= \033[m
 all: $(NAME)
 
 $(NAME): $(LIB) $(OBJS)
-	@gcc -o $(NAME) $(FLAGS) $(OBJS) $(LIB) $(MLX)
+	@gcc -o $(NAME) $(FLAGS) $(OBJS) $(LIB)
 	@echo  "\b$(YELLOW) : OK$(RES)"
 
 %.o: %.c $(HEADER)
@@ -48,13 +46,10 @@ $(NAME): $(LIB) $(OBJS)
 $(LIB):
 	@echo  "$(GREEN)Compiling: $(WHITE)libftASM$(RES)$(YELLOW) : $(RES)\c)"
 	@make -C libftASM
-	@echo  "$(GREEN)Compiling: $(WHITE)minilibx$(RES)$(WHITE) : $(RES)\c)"
-	@make -C libmlx
 	@echo  "$(GREEN)Compiling: $(WHITE)N-puzzle$(RES)$(YELLOW) : $(RES)\c)"
 
 clean:
 	@make -C libftASM clean
-	@make -C libmlx clean
 	@rm -rf $(OBJS)
 
 fclean: clean
